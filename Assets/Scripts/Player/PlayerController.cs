@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     private void InitializePlayerMovement()
     {
         _playerMovement = new PlayerMovement();
-        _playerMovement.Initialize(this.GetComponent<Rigidbody>(), this.transform);
+        _playerMovement.Initialize(this.GetComponent<Rigidbody>(), this.transform, this.GetComponent<Animator>());
     }
 
     private void InitializePlayerTapProcessor()

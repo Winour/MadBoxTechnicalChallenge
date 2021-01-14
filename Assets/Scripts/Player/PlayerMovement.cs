@@ -6,6 +6,7 @@ public class PlayerMovement
 {
     private Rigidbody _rigidBody;
     private Transform _transform;
+    private Animator _animator;
 
     private const float _runSpeed = 15f;
 
@@ -22,10 +23,11 @@ public class PlayerMovement
     private bool IsHorizontallyMoving => _rigidBody.velocity.x != 0 || _rigidBody.velocity.z != 0;
     private bool IsVerticallyMoving => _rigidBody.velocity.y != 0;
 
-    public void Initialize(Rigidbody rigidBody, Transform transform)
+    public void Initialize(Rigidbody rigidBody, Transform transform, Animator animator)
     {
         _rigidBody = rigidBody;
         _transform = transform;
+        _animator = animator;
     }
 
     public void Rotate()
@@ -95,11 +97,14 @@ public class PlayerMovement
 
     private void Move()
     {
+        _animator.SetBool("IsRunning", true);
         _rigidBody.velocity = _transform.forward * Mathf.Lerp(_rigidBody.velocity.magnitude, _runSpeed, 10f * Time.fixedDeltaTime);
     }
 
     public void Stop(bool smoothly = true)
     {
+        _animator.SetBool("IsRunning", false);
+
         if(_rigidBody.velocity == Vector3.zero)
             return;
 
