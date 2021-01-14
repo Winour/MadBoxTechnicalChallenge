@@ -12,6 +12,9 @@ public class PlayerTapProcessor
     {
         InputManager.onScreenTapDown += ProcessTapDown;
         InputManager.onScreenTapUp += ProcessTapUp;
+
+        _onStartTappingDown = new UnityEvent();
+        _onStartTappingUp = new UnityEvent();
     }
 
     public void Reset()
