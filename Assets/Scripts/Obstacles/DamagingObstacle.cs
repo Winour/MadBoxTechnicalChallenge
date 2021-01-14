@@ -10,6 +10,6 @@ public class DamagingObstacle : Obstacle
         PlayerController playerController = other.GetComponent<PlayerController>();
 
         if(playerController)
-            playerController.ResetPlayerPosition();
+            playerController.ResetPlayer();
     }
 }

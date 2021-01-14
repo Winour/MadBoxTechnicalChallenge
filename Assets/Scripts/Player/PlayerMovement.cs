@@ -125,4 +125,16 @@ public class PlayerMovement
         _hasToClimb = true;
         _climbHeightTarget = heightTarget;
     }
+
+    public void SetFinishState()
+    {
+        Stop(false);
+        _animator.SetTrigger("Dance");
+    }
+
+    public void ResetPlayer()
+    {
+        Stop(false);
+        _animator.Rebind();
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,6 +11,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 _initialPosition;
     private Quaternion _initialRotation;
 
+    private bool _canPlay;
+
     private void Awake()
     {
         InitializePlayerMovement();
@@ -17,6 +20,8 @@ public class PlayerController : MonoBehaviour
         InitializePlayerTapProcessor();
 
         SaveInitialTransform();
+
+        _canPlay = true;
     }
 
     private void SaveInitialTransform()
@@ -44,6 +49,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(!_canPlay)
+            return;
+
         if(!_playerTapProcessor.IsTappingScreen)
         {
             _playerMovement.Stop();
@@ -63,7 +71,27 @@ public class PlayerController : MonoBehaviour
         _playerMovement.SetClimbTarget(heightTarget);
     }
 
-    public void ResetPlayerPosition()
+    public void SetFinishState()
+    {
+        _canPlay = false;
+        _playerMovement.SetFinishState();
+        StartCoroutine(WaitToReplayIE());
+    }
+
+    private IEnumerator WaitToReplayIE()
+    {
+        yield return new WaitForSeconds(3f);
+        ResetPlayer();
+    }
+
+    public void ResetPlayer()
+    {
+        ResetPlayerPosition();
+        _playerMovement.ResetPlayer();
+        _canPlay = true;
+    }
+
+    private void ResetPlayerPosition()
     {
         transform.position = _initialPosition;
         transform.rotation = _initialRotation;
