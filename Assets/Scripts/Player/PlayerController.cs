@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -6,11 +7,22 @@ public class PlayerController : MonoBehaviour
 
     private PlayerTapProcessor _playerTapProcessor;
 
+    private Vector3 _initialPosition;
+    private Quaternion _initialRotation;
+
     private void Awake()
     {
         InitializePlayerMovement();
 
         InitializePlayerTapProcessor();
+
+        SaveInitialTransform();
+    }
+
+    private void SaveInitialTransform()
+    {
+        _initialPosition = this.transform.position;
+        _initialRotation = this.transform.rotation;
     }
 
     private void InitializePlayerMovement()
@@ -49,5 +61,11 @@ public class PlayerController : MonoBehaviour
     public void SetPlayerClimbTarget(float heightTarget)
     {
         _playerMovement.SetClimbTarget(heightTarget);
+    }
+
+    public void ResetPlayerPosition()
+    {
+        transform.position = _initialPosition;
+        transform.rotation = _initialRotation;
     }
 }
