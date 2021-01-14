@@ -2,25 +2,15 @@
 
 public class PlayerController : MonoBehaviour
 {
-    private PlayerCollisionController _playerCollisionController;
     private PlayerMovement _playerMovement;
 
     private PlayerTapProcessor _playerTapProcessor;
 
     private void Awake()
     {
-        InitializePlayerCollisionController();
-
         InitializePlayerMovement();
 
         InitializePlayerTapProcessor();
-    }
-
-    private void InitializePlayerCollisionController()
-    {        
-        _playerCollisionController = this.GetComponent<PlayerCollisionController>();
-        if(!_playerCollisionController)
-            _playerCollisionController = this.gameObject.AddComponent<PlayerCollisionController>();
     }
 
     private void InitializePlayerMovement()
@@ -48,12 +38,16 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        _playerMovement.Move();
+        _playerMovement.MoveAction();
     }
 
     public void SetPlayerRotationTarget(bool isLeftDirection)
     {
-
         _playerMovement.SetRotationTarget(isLeftDirection ? -this.transform.right : this.transform.right);
+    }
+
+    public void SetPlayerClimbTarget(float heightTarget)
+    {
+        _playerMovement.SetClimbTarget(heightTarget);
     }
 }
