@@ -24,7 +24,7 @@ public class InputManager : MonoBehaviour
             return false;
 
 #if UNITY_EDITOR
-        if(Input.GetMouseButtonDown(0))
+        if(!Input.GetMouseButtonDown(0))
             return false;
 #else
         if(Input.touchCount == 0 || Input.touches[0].phase != TouchPhase.Began)
